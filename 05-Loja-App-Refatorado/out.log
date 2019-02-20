@@ -1,0 +1,10 @@
+2019-02-19 22:23:12 WARN  TerminalConsulta:20 - Início da aplicação
+2019-02-19 22:23:22 DEBUG EstoqueBO:14 - Pesquisando código: 401
+2019-02-19 22:23:24 DEBUG EstoqueBO:14 - Pesquisando código: 402
+2019-02-19 22:23:25 DEBUG EstoqueBO:14 - Pesquisando código: 56
+2019-02-19 22:23:25 ERROR EstoqueBO:26 - Código não encontrado: 56
+2019-02-19 22:23:25 ERROR TerminalConsulta:47 - Produto não encontrado
+2019-02-19 22:23:29 DEBUG EstoqueBO:14 - Pesquisando código: 0
+2019-02-19 22:23:29 ERROR EstoqueBO:26 - Código não encontrado: 0
+2019-02-19 22:23:29 ERROR TerminalConsulta:47 - Produto não encontrado
+2019-02-19 22:23:29 WARN  TerminalConsulta:53 - Fim da aplicação!
