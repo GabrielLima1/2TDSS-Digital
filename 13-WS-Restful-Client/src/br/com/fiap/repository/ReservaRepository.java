@@ -17,6 +17,33 @@ public class ReservaRepository {
 	
 	private static final String URL = "http://localhost:8080/12-WS-Restful/rest/reserva/";
 	
+	public void remover(int codigo) throws Exception {
+		
+		WebResource resource = client.resource(URL + codigo);
+		
+		ClientResponse resp = resource.delete(ClientResponse.class);
+		
+		if (resp.getStatus() != 204) {
+			throw new Exception();
+		}
+		
+	}
+	
+	public void atualizar(Reserva reserva) throws Exception {
+		
+		WebResource resource = 
+				client.resource(URL + reserva.getCodigo());
+		
+		ClientResponse resp = resource
+			.type(MediaType.APPLICATION_JSON)
+			.put(ClientResponse.class, reserva);
+		
+		if (resp.getStatus() != 200) {
+			throw new Exception();
+		}
+		
+	}
+	
 	public void cadastrar(Reserva reserva) throws Exception {
 		
 		WebResource resource = client.resource(URL);

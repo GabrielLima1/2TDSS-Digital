@@ -7,6 +7,20 @@ public class Reserva {
 	private String cliente;
 
 	private float preco;
+	
+	
+
+	public Reserva(int codigo, String cliente, float preco) {
+		super();
+		this.codigo = codigo;
+		this.cliente = cliente;
+		this.preco = preco;
+	}
+
+	public Reserva() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getCodigo() {
 		return codigo;
