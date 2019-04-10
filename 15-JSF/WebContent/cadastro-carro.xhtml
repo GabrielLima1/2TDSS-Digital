@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title>Cadastro de Cliente</title>
+</h:head>
+
+<h:body>
+
+	<h2>Cadastro de Carro</h2>
+	
+	<h:messages/>
+	
+	<h:form>
+		<div>
+			<h:outputLabel value="Modelo" for="modelo"/>
+			<h:selectOneMenu id="modelo" 
+				value="#{carroBean.carro.modelo}">
+				<f:selectItem itemLabel="Hatch" itemValue="Hatch"/>
+				<f:selectItem itemLabel="Sedan" itemValue="Sedan"/>
+				<f:selectItem itemLabel="SUV" itemValue="SUV"/>
+			</h:selectOneMenu>
+		</div>
+		<div>
+			<h:outputLabel value="Marca" for="marca"/>
+			<h:selectOneRadio id="marca"
+				value="#{carroBean.carro.marca}">
+				<f:selectItem itemLabel="GM" itemValue="GM"/>
+				<f:selectItem itemLabel="Hyundai" itemValue="Hyundai"/>
+				<f:selectItem itemLabel="Volks" itemValue="Volks"/>
+			</h:selectOneRadio>
+		</div>
+		<div>
+			<h:outputLabel value="Ano" for="ano"/>
+			<h:inputText id="ano" value="#{carroBean.carro.ano}"/>
+		</div>
+		<div>
+			<h:selectBooleanCheckbox id="flex"
+				value="#{carroBean.carro.flex}"/>
+			<h:outputLabel for="flex" value="Flex"/>
+		</div>
+		<div>
+			<h:outputLabel value="Placa" for="placa"/>
+			<h:inputText id="placa"
+				value="#{carroBean.carro.placa}"/>
+		</div>
+		<h:commandButton value="Cadastrar" 
+			actionListener="#{carroBean.cadastrar()}"/>
+	</h:form>
+	
+	<h2>Carros</h2>
+	
+	<h:dataTable value="#{carroBean.carros()}" var="c">
+		
+		<h:column>
+			<f:facet name="header">Modelo</f:facet>
+			#{c.modelo}
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Marca</f:facet>
+			#{c.marca}
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Ano</f:facet>
+			#{c.ano}
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Placa</f:facet>
+			#{c.placa}
+		</h:column>
+		
+		<h:column>
+			<f:facet name="header">Flex</f:facet>
+			#{c.flex}
+		</h:column>
+		
+	</h:dataTable>
+	
+</h:body>
+
+</html>
+
+
+
