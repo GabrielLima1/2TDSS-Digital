@@ -8,45 +8,60 @@
 
 <h:head>
 	<title>Reservas</title>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
 </h:head>
 
 <h:body>
-	
-	<h1>Reservas</h1>
-	<h:messages/>
-	<h:form>
-		<div>
-			<h:outputLabel value="Cliente" for="cli"/>
-			<h:inputText id="cli" 
-				value="#{reservaBean.reserva.cliente}"/>
-		</div>
-		<div>
-			<h:outputLabel value="Preço" for="preco"/>
-			<h:inputText id="preco"
-				value="#{reservaBean.reserva.preco}"/>
-		</div>
-		<h:commandButton value="Cadastrar"
-				actionListener="#{reservaBean.cadastrar()}"/>
-	</h:form>
-	
-	<h2>Listar</h2>
-	
-	<h:dataTable value="#{reservaBean.listar()}" var="r">
-		<h:column>
-			<f:facet name="header">Código</f:facet>
-			#{r.codigo}
-		</h:column>
-		<h:column>
-			<f:facet name="header">Cliente</f:facet>
-			#{r.cliente}
-		</h:column>
-		<h:column>
-			<f:facet name="header">Preço</f:facet>
-			#{r.preco}
-		</h:column>
-	</h:dataTable>
-	
-	
+	<div class="container">
+
+		<h1>Reservas</h1>
+		<h:messages styleClass="alert alert-success" style="list-style:none;"/>
+		<h:form>
+			<div class="form-group">
+				<h:outputLabel value="Cliente" for="cli" />
+				<h:inputText styleClass="form-control" 
+					id="cli" value="#{reservaBean.reserva.cliente}" />
+			</div>
+			<div class="form-group">
+				<h:outputLabel value="Preço" for="preco" />
+				<h:inputText styleClass="form-control" id="preco" value="#{reservaBean.reserva.preco}" />
+			</div>
+			<h:commandButton value="#{reservaBean.reserva.codigo == 0?
+													'Cadastrar':'Atualizar'}"
+				styleClass="btn btn-success"
+				actionListener="#{reservaBean.cadastrar()}" />
+		</h:form>
+		
+		<br/>
+		<h2>Lista de Reservas</h2>
+
+		<h:dataTable styleClass="table" value="#{reservaBean.listar()}" var="r">
+			<h:column>
+				<f:facet name="header">Código</f:facet>
+				#{r.codigo}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Cliente</f:facet>
+				#{r.cliente}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Preço</f:facet>
+				#{r.preco}
+			</h:column>
+			<h:column>
+				<h:form>
+					<h:commandButton value="Alterar" styleClass="btn btn-sm btn-outline-primary mr-2">
+						<f:setPropertyActionListener value="#{r}" 
+											target="#{reservaBean.reserva}"/>
+					</h:commandButton>
+					<h:commandButton value="Excluir"
+						styleClass="btn btn-sm btn-outline-danger"
+						action="#{reservaBean.deletar(r.codigo)}"/>
+				</h:form>	
+			</h:column>
+		</h:dataTable>
+
+	</div>
 </h:body>
 
 </html>

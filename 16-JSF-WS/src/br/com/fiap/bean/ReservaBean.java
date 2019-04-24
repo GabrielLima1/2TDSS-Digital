@@ -1,17 +1,20 @@
 package br.com.fiap.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.com.fiap.repository.ReservaRepository;
 import br.com.fiap.to.Reserva;
 
+@ViewScoped
 @ManagedBean
-public class ReservaBean {
+public class ReservaBean implements Serializable {
 
 	private Reserva reserva;
 	
@@ -28,22 +31,39 @@ public class ReservaBean {
 			return rep.listar();
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, 
-				new FacesMessage("Erro ao listar"));
+			exibeMensagem("Erro ao listar..");
 			return null;
 		}
 	}
-
-	public void cadastrar() {
-		FacesMessage msg;
+	
+	public void deletar(int codigo) {
 		try {
-			rep.cadastrar(getReserva());
-			msg = new FacesMessage("Cadastrado!");
+			rep.remover(codigo);
+			exibeMensagem("Excluido com sucesso!");
 		} catch (Exception e) {
 			e.printStackTrace();
-			msg = new FacesMessage("Erro..");
+			exibeMensagem("Erro..");
 		}
+	}
+	
+	private void exibeMensagem(String mensagem) {
+		FacesMessage msg = new FacesMessage(mensagem);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void cadastrar() {		
+		try {
+			if (reserva.getCodigo() == 0) {
+				rep.cadastrar(getReserva());
+				exibeMensagem("Cadastrado!");
+			}else {
+				rep.atualizar(reserva);
+				exibeMensagem("Atualizado!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			exibeMensagem("Erro..");
+		}
 	}
 
 	public Reserva getReserva() {
