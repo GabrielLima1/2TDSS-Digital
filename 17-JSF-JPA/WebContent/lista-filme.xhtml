@@ -6,30 +6,44 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<h:head>
-	<title>Lista de Filmes</title>
-</h:head>
-
-<h:body>
-	<h1>Lista de Filmes</h1>
-	
-	<h:dataTable value="#{filmeBean.listar()}" var="f">
-		<h:column>
-			<f:facet name="header">Título</f:facet>
+<ui:composition template="_template.xhtml">
+	<ui:define name="title">Lista de Filmes</ui:define>
+	<ui:define name="content">
+		<h1>Lista de Filmes</h1>
+		<h:messages styleClass="alert alert-success"/>
+		<h:link outcome="cadastro-filme">Cadastrar</h:link>
+		<h:dataTable styleClass="table" value="#{filmeBean.listar()}" var="f">
+			<h:column>
+				<f:facet name="header">Título</f:facet>
 			#{f.titulo}
 		</h:column>
-		<h:column>
-			<f:facet name="header">Data Lançamento</f:facet>
-			<h:outputText value="#{f.dataLancamento.time}">
-				<f:convertDateTime pattern="dd/MM/yyyy"/>
-			</h:outputText>
-		</h:column>
-		<h:column>
-			<f:facet name="header">Dublado</f:facet>
+			<h:column>
+				<f:facet name="header">Data Lançamento</f:facet>
+				<h:outputText value="#{f.dataLancamento.time}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">Dublado</f:facet>
 			#{f.dublado?"Sim":"Não"}
 		</h:column>
-	</h:dataTable>
-	
-</h:body>
+		<h:column>
+			<h:form>
+			
+				<h:commandButton action="cadastro-filme" value="Editar" styleClass="btn btn-outline-primary btn-sm">
+					<f:setPropertyActionListener value="#{f}" 
+										target="#{filmeBean.filme}"/>
+				</h:commandButton>
+				
+				<h:commandButton action="#{filmeBean.remover(f.codigo)}" value="Remover" styleClass="btn btn-outline-danger btn-sm ml-2"/>
+			</h:form>
+		</h:column>
+		</h:dataTable>
+	</ui:define>
+</ui:composition>
+
+
+
+
 
 </html>
