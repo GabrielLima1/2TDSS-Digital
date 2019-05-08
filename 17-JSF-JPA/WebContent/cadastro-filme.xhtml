@@ -10,29 +10,38 @@
 <ui:composition template="_template.xhtml">
 	<ui:define name="title">Cadastro de Filme</ui:define>
 	<ui:define name="content">
-		<h1>Cadastro de Filme</h1>
+		
+		<f:loadBundle var="f" basename="br.com.fiap.bundle.filme_en"/>
+	
+		<h1>#{f.titulo_cadastro}</h1>
 
-		<h:messages />
+		<h:messages styleClass="alert alert-danger" />
 
 		<h:form>
 			<h:inputHidden value="#{filmeBean.filme.codigo}"/>
 			<div class="form-group">
-				<h:outputLabel value="Título" for="titulo" />
-				<h:inputText styleClass="form-control" value="#{filmeBean.filme.titulo}" id="titulo" />
+				<h:outputLabel value="#{f.lbl_titulo}" for="titulo" />
+				<h:inputText validator="#{filmeBean.validarTitulo}" 
+					required="true" requiredMessage="Campo obrigatório" styleClass="form-control" value="#{filmeBean.filme.titulo}" id="titulo" >
+					<f:validateLength minimum="2" maximum="10"/>
+				</h:inputText>
+				<h:message for="titulo" styleClass="text-danger"/>
 			</div>
 			<div class="form-group">
-				<h:outputLabel value="Data Lançamento" for="lan" />
+				<h:outputLabel value="#{f.lbl_data}" for="lan" />
 				<h:inputText styleClass="form-control" value="#{filmeBean.filme.dataLancamento.time}" id="lan">
+					<f:validator validatorId="dataFuturo"/>
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:inputText>
+				<h:message for="lan" styleClass="text-danger"/>
 			</div>
 			<div>
 				<h:selectBooleanCheckbox value="#{filmeBean.filme.dublado}"
 					id="dublado" />
-				<h:outputLabel value="Dublado" for="dublado" />
+				<h:outputLabel value="#{f.lbl_dublado}" for="dublado" />
 			</div>
-			<h:commandButton styleClass="btn btn-primary" value="#{filmeBean.filme.codigo==0?'Cadastrar':'Atualizar'}" action="#{filmeBean.salvar()}" />
-			<h:link outcome="lista-filme">Lista de Filmes</h:link>
+			<h:commandButton styleClass="btn btn-primary" value="#{filmeBean.filme.codigo==0?f.btn_salvar:'Atualizar'}" action="#{filmeBean.salvar()}" />
+			<h:link outcome="lista-filme">#{f.btn_listar}</h:link>
 		</h:form>
 	</ui:define>
 

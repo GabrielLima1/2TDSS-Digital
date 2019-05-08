@@ -2,13 +2,16 @@ package br.com.fiap.bean;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 
 import br.com.fiap.dao.FilmeDAO;
 import br.com.fiap.dao.impl.FilmeDAOImpl;
@@ -29,6 +32,18 @@ public class FilmeBean implements Serializable {
 		filme = new Filme();
 		filme.setDataLancamento(Calendar.getInstance());
 		dao = new FilmeDAOImpl(EntityManagerFactorySingleton.getInstance().createEntityManager());
+	}
+	
+	public void validarTitulo(FacesContext context, UIComponent 
+			component, Object value) throws ValidatorException {
+		
+		String titulo = value.toString();
+		
+		if (dao.contarPorTitulo(titulo) != 0) {
+			throw new ValidatorException(
+					new FacesMessage("Título já cadastrado!"));
+		}
+		
 	}
 	
 	public String remover(int codigo) {

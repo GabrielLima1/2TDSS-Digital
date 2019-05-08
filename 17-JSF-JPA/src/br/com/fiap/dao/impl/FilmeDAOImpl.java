@@ -11,4 +11,12 @@ public class FilmeDAOImpl extends GenericDAOImpl<Filme, Integer> implements Film
 		super(em);
 	}
 
+	@Override
+	public long contarPorTitulo(String titulo) {
+		return em.createQuery("select count(f) from Filme f "
+				+ "where f.titulo = :D",Long.class)
+				.setParameter("D", titulo)
+				.getSingleResult();
+	}
+
 }
